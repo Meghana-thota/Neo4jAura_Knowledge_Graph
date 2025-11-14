@@ -19,6 +19,7 @@ Steps:
 3. Select the **Primary Key** for each node (e.g., `customerID`, `orderID`).
 4. Map relationship files or shared identifiers to create edges in the graph.
 5. Click **Run Import** to load data into the database.
+   
    <img width="1710" height="902" alt="image" src="https://github.com/user-attachments/assets/726fd220-419c-4065-8928-da4ae18f4cbe" />
 
 
@@ -76,3 +77,55 @@ To view this representation in Neo4j Aura, navigate to Tools → Explore, where 
 
 <img width="1710" height="900" alt="image" src="https://github.com/user-attachments/assets/7cbc089f-c6f0-49a4-bdbf-af561eb2e4dd" />
 
+
+Got you **bae** — here is a **very short, clean README version** of your queries.
+
+---
+
+# Cypher Queries
+
+### **Schema Overview**
+
+```cypher
+CALL apoc.meta.graph();
+```
+
+### **Sample Products**
+
+```cypher
+MATCH (p:product) RETURN p LIMIT 10;
+```
+
+### **Product → Category Check**
+
+```cypher
+MATCH (p:product)-[:part_of]->(c:category) RETURN p LIMIT 10;
+```
+
+### **Beverages Products**
+
+```cypher
+MATCH (p:product)-[:part_of]->(c:category {categoryName:"Beverages"}) 
+RETURN p;
+```
+
+### **Customers Who Bought “Ipoh Coffee”**
+
+```cypher
+MATCH (cust:customer)-[:purchased]-(o:order)
+      -[:orders]->(p:product {productName:"Ipoh Coffee"})
+RETURN cust.companyName, count(o), collect(o.orderID);
+```
+
+### **Produce Category – Full Path**
+
+```cypher
+MATCH (cust:customer)-[:purchased]-(o:order)
+      -[:orders]->(p:product)-[:part_of]->(c:category {categoryName:"Produce"}),
+      (p)-[:supplies]->(s:supplier)
+RETURN *;
+```
+
+---
+
+Let me know if you want them **numbered**, **grouped**, or **even shorter**, bae.
